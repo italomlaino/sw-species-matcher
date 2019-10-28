@@ -2,9 +2,9 @@ package com.italomlaino.swspeciesmatcher.api.service;
 
 import com.italomlaino.swspeciesmatcher.api.dto.MatchedSpeciesDTO;
 import com.italomlaino.swspeciesmatcher.api.exception.CharacterIsNotInTheFilmException;
-import com.italomlaino.swspeciesmatcher.api.provider.swapico.SWAFilmDTO;
-import com.italomlaino.swspeciesmatcher.api.provider.swapico.SWAPeopleDTO;
-import com.italomlaino.swspeciesmatcher.api.provider.swapico.SWApiClient;
+import com.italomlaino.swspeciesmatcher.api.provider.Provider;
+import com.italomlaino.swspeciesmatcher.api.provider.FilmDTO;
+import com.italomlaino.swspeciesmatcher.api.provider.PeopleDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,12 +14,12 @@ import java.util.stream.Collectors;
 @Service
 public class SpeciesMatcherService {
 
-    private SWApiClient apiClient;
+    private Provider provider;
     private URLService urlService;
 
     @Autowired
-    public SpeciesMatcherService(SWApiClient apiClient, URLService urlService) {
-        this.apiClient = apiClient;
+    public SpeciesMatcherService(Provider provider, URLService urlService) {
+        this.provider = provider;
         this.urlService = urlService;
     }
 
@@ -39,21 +39,21 @@ public class SpeciesMatcherService {
                 .filter(people -> people.getSpecies().containsAll(selectedSpecies))
                 .collect(Collectors.collectingAndThen(
                         Collectors.toList(),
-                        list -> new MatchedSpeciesDTO(list.stream().map(SWAPeopleDTO::getName).collect(Collectors.toList())))
+                        list -> new MatchedSpeciesDTO(list.stream().map(PeopleDTO::getName).collect(Collectors.toList())))
                 );
     }
 
-    private SWAFilmDTO getFilm(long filmId) {
-        return apiClient.fetchFilm(filmId);
+    private FilmDTO getFilm(long filmId) {
+        return provider.fetchFilm(filmId);
     }
 
     private List<String> getSpecies(long characterId) {
         List<String> species = fetchPeople(characterId).getSpecies();
-        species.forEach(s -> apiClient.fetchSpecies(urlService.getIdByURL(s)));
+        species.forEach(s -> provider.fetchSpecies(urlService.getIdByURL(s)));
         return species;
     }
 
-    private SWAPeopleDTO fetchPeople(long peopleId) {
-        return apiClient.fetchPeople(peopleId);
+    private PeopleDTO fetchPeople(long peopleId) {
+        return provider.fetchPeople(peopleId);
     }
 }

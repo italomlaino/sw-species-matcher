@@ -1,10 +1,10 @@
-package com.italomlaino.swspeciesmatcher.api.provider.swapico;
+package com.italomlaino.swspeciesmatcher.api.provider;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class SWASpeciesDTO {
+public class SpeciesDTO {
 
     @JsonProperty("name")
     private String name;

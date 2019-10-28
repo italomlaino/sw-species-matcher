@@ -4,7 +4,7 @@ import com.italomlaino.swspeciesmatcher.api.exception.FailedToFetchCharacterExce
 import com.italomlaino.swspeciesmatcher.api.exception.FailedToFetchFilmException;
 import com.italomlaino.swspeciesmatcher.api.exception.FailedToFetchSpeciesException;
 import com.italomlaino.swspeciesmatcher.api.exception.SpeciesNotFoundException;
-import com.italomlaino.swspeciesmatcher.api.provider.swapico.SWApiClient;
+import com.italomlaino.swspeciesmatcher.api.provider.Provider;
 import com.italomlaino.swspeciesmatcher.api.service.URLService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -38,7 +38,7 @@ public class SpeciesMatcherControllerTest {
     @Autowired
     private MockMvc mvc;
     @SpyBean
-    private SWApiClient apiClient;
+    private Provider provider;
     @SpyBean
     private URLService urlService;
 
@@ -70,7 +70,7 @@ public class SpeciesMatcherControllerTest {
 
     @Test
     public void matches_speciesNotFound() throws Exception {
-        doThrow(new SpeciesNotFoundException()).when(apiClient).fetchSpecies(anyLong());
+        doThrow(new SpeciesNotFoundException()).when(provider).fetchSpecies(anyLong());
 
         mvc.perform(
                 getRequest("1", "2"))
@@ -88,7 +88,7 @@ public class SpeciesMatcherControllerTest {
 
     @Test
     public void matches_failedToFetchCharacter() throws Exception {
-        doThrow(new FailedToFetchCharacterException()).when(apiClient).fetchPeople(2);
+        doThrow(new FailedToFetchCharacterException()).when(provider).fetchPeople(2);
 
         mvc.perform(
                 getRequest("1", "2"))
@@ -98,7 +98,7 @@ public class SpeciesMatcherControllerTest {
 
     @Test
     public void matches_failedToFetchFilm() throws Exception {
-        doThrow(new FailedToFetchFilmException()).when(apiClient).fetchFilm(1);
+        doThrow(new FailedToFetchFilmException()).when(provider).fetchFilm(1);
 
         mvc.perform(
                 getRequest("1", "2"))
@@ -108,7 +108,7 @@ public class SpeciesMatcherControllerTest {
 
     @Test
     public void matches_failedToFetchSpecies() throws Exception {
-        doThrow(new FailedToFetchSpeciesException()).when(apiClient).fetchSpecies(anyLong());
+        doThrow(new FailedToFetchSpeciesException()).when(provider).fetchSpecies(anyLong());
 
         mvc.perform(
                 getRequest("1", "2"))

@@ -1,4 +1,4 @@
-package com.italomlaino.swspeciesmatcher.api.provider.swapico;
+package com.italomlaino.swspeciesmatcher.api.provider;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class SWAPeopleDTO {
+public class PeopleDTO {
 
     @JsonProperty("name")
     private String name;
