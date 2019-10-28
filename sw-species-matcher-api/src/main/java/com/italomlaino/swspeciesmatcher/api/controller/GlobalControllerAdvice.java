@@ -4,6 +4,8 @@ package com.italomlaino.swspeciesmatcher.api.controller;
 import com.italomlaino.swspeciesmatcher.api.dto.ErrorDTO;
 import com.italomlaino.swspeciesmatcher.api.dto.ResponseDTO;
 import com.italomlaino.swspeciesmatcher.api.exception.*;
+import com.italomlaino.swspeciesmatcher.api.service.TranslatorService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -14,6 +16,13 @@ import static org.springframework.http.HttpStatus.*;
 
 @ControllerAdvice
 public class GlobalControllerAdvice {
+
+    private TranslatorService translatorService;
+
+    @Autowired
+    public GlobalControllerAdvice(TranslatorService translatorService) {
+        this.translatorService = translatorService;
+    }
 
     @ExceptionHandler({FilmNotFoundException.class})
     public ResponseEntity<ResponseDTO> handle(FilmNotFoundException e) {
@@ -62,7 +71,7 @@ public class GlobalControllerAdvice {
 
     public ResponseEntity<ResponseDTO> handle(Exception e, HttpStatus status) {
         ErrorDTO errorDTO = new ErrorDTO();
-        errorDTO.setMessage(e.getMessage());
+        errorDTO.setMessage(translatorService.toLocale(e.getMessage()));
 
         return new ResponseEntity<>(errorDTO, status);
     }
