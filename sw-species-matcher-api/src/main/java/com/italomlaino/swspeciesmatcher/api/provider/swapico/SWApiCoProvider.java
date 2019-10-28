@@ -12,7 +12,8 @@ public class SWApiCoProvider implements Provider {
 
     private SWApiCoFeignClient feignClient;
 
-    public SWApiCoProvider(@Autowired SWApiCoFeignClient feignClient) {
+    @Autowired
+    public SWApiCoProvider(SWApiCoFeignClient feignClient) {
         this.feignClient = feignClient;
     }
 

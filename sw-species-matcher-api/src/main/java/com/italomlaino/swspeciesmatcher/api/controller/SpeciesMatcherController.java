@@ -14,7 +14,8 @@ public class SpeciesMatcherController {
 
     private SpeciesMatcherService service;
 
-    public SpeciesMatcherController(@Autowired SpeciesMatcherService service) {
+    @Autowired
+    public SpeciesMatcherController(SpeciesMatcherService service) {
         this.service = service;
     }
 
