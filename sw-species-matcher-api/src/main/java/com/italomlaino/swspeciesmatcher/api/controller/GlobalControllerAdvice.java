@@ -39,11 +39,6 @@ public class GlobalControllerAdvice {
         return handle(e, NOT_FOUND);
     }
 
-    @ExceptionHandler({CharacterIsNotInTheFilmException.class})
-    public ResponseEntity<ResponseDTO> handle(CharacterIsNotInTheFilmException e) {
-        return handle(e, NOT_FOUND);
-    }
-
     @ExceptionHandler({FailedToFetchFilmException.class})
     public ResponseEntity<ResponseDTO> handle(FailedToFetchFilmException e) {
         return handle(e, FAILED_DEPENDENCY);

@@ -2,8 +2,6 @@ package com.italomlaino.swspeciesmatcher.api.controller;
 
 import com.italomlaino.swspeciesmatcher.api.exception.FailedToFetchCharacterException;
 import com.italomlaino.swspeciesmatcher.api.exception.FailedToFetchFilmException;
-import com.italomlaino.swspeciesmatcher.api.exception.FailedToFetchSpeciesException;
-import com.italomlaino.swspeciesmatcher.api.exception.SpeciesNotFoundException;
 import com.italomlaino.swspeciesmatcher.api.provider.Provider;
 import com.italomlaino.swspeciesmatcher.api.service.URLService;
 import org.junit.Test;
@@ -18,7 +16,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 
 import static org.hamcrest.CoreMatchers.equalTo;
-import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.contains;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.doThrow;
@@ -52,30 +49,12 @@ public class SpeciesMatcherControllerTest {
 
     @Test
     public void matches_characterNotFound() throws Exception {
+        doReturn(99999999999L).when(urlService).getIdByURL(contains("people"));
+
         mvc.perform(
                 getRequest("1", "99999999999"))
                 .andExpect(status().isNotFound())
                 .andExpect(content().string(equalTo("{\"message\":\"Character not found\"}")));
-    }
-
-    @Test
-    public void matches_characterNotInTheFilm() throws Exception {
-        doReturn(-1L).when(urlService).getIdByURL(contains("people"));
-
-        mvc.perform(
-                getRequest("1", "2"))
-                .andExpect(status().isNotFound())
-                .andExpect(content().string(equalTo("{\"message\":\"Character is not in the film\"}")));
-    }
-
-    @Test
-    public void matches_speciesNotFound() throws Exception {
-        doThrow(new SpeciesNotFoundException()).when(provider).fetchSpecies(anyLong());
-
-        mvc.perform(
-                getRequest("1", "2"))
-                .andExpect(status().isNotFound())
-                .andExpect(content().string(equalTo("{\"message\":\"Species not found\"}")));
     }
 
     @Test
@@ -104,16 +83,6 @@ public class SpeciesMatcherControllerTest {
                 getRequest("1", "2"))
                 .andExpect(status().isFailedDependency())
                 .andExpect(content().string(equalTo("{\"message\":\"Failed to fetch the film\"}")));
-    }
-
-    @Test
-    public void matches_failedToFetchSpecies() throws Exception {
-        doThrow(new FailedToFetchSpeciesException()).when(provider).fetchSpecies(anyLong());
-
-        mvc.perform(
-                getRequest("1", "2"))
-                .andExpect(status().isFailedDependency())
-                .andExpect(content().string(equalTo("{\"message\":\"Failed to fetch the species\"}")));
     }
 
     @Test

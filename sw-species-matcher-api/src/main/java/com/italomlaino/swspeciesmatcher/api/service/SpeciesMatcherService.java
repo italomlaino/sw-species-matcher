@@ -1,15 +1,16 @@
 package com.italomlaino.swspeciesmatcher.api.service;
 
 import com.italomlaino.swspeciesmatcher.api.dto.MatchedSpeciesDTO;
-import com.italomlaino.swspeciesmatcher.api.exception.CharacterIsNotInTheFilmException;
-import com.italomlaino.swspeciesmatcher.api.provider.Provider;
 import com.italomlaino.swspeciesmatcher.api.provider.FilmDTO;
 import com.italomlaino.swspeciesmatcher.api.provider.PeopleDTO;
+import com.italomlaino.swspeciesmatcher.api.provider.Provider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class SpeciesMatcherService {
@@ -26,15 +27,11 @@ public class SpeciesMatcherService {
     public MatchedSpeciesDTO matches(
             long filmId,
             long characterId) {
-        List<String> selectedSpecies = getSpecies(characterId);
-        List<String> characters = getFilm(filmId).getCharacters();
-        boolean characterIsInTheFilm = characters.stream().anyMatch(characterURL -> urlService.getIdByURL(characterURL) == characterId);
-        if (!characterIsInTheFilm)
-            throw new CharacterIsNotInTheFilmException();
-        
-        return characters
-                .stream()
-                .map(url -> urlService.getIdByURL(url))
+        Supplier<Stream<String>> characters = () -> getFilm(filmId).getCharacters().parallelStream();
+        Supplier<Stream<Long>> charactersIds = () -> characters.get().map(characterURL -> urlService.getIdByURL(characterURL));
+        List<String> selectedSpecies = fetchPeople(characterId).getSpecies();
+        return charactersIds
+                .get()
                 .map(this::fetchPeople)
                 .filter(people -> people.getSpecies().containsAll(selectedSpecies))
                 .collect(Collectors.collectingAndThen(
@@ -45,12 +42,6 @@ public class SpeciesMatcherService {
 
     private FilmDTO getFilm(long filmId) {
         return provider.fetchFilm(filmId);
-    }
-
-    private List<String> getSpecies(long characterId) {
-        List<String> species = fetchPeople(characterId).getSpecies();
-        species.forEach(s -> provider.fetchSpecies(urlService.getIdByURL(s)));
-        return species;
     }
 
     private PeopleDTO fetchPeople(long peopleId) {
