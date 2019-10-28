@@ -1,6 +1,6 @@
 package com.italomlaino.swspeciesmatcher.api.dto;
 
-public class ErrorDTO implements ResponseDTO {
+public class ErrorDto implements ResponseDto {
 
     private String message;
 

@@ -1,8 +1,8 @@
 package com.italomlaino.swspeciesmatcher.api.controller;
 
 
-import com.italomlaino.swspeciesmatcher.api.dto.ErrorDTO;
-import com.italomlaino.swspeciesmatcher.api.dto.ResponseDTO;
+import com.italomlaino.swspeciesmatcher.api.dto.ErrorDto;
+import com.italomlaino.swspeciesmatcher.api.dto.ResponseDto;
 import com.italomlaino.swspeciesmatcher.api.exception.*;
 import com.italomlaino.swspeciesmatcher.api.service.TranslatorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,49 +25,49 @@ public class GlobalControllerAdvice {
     }
 
     @ExceptionHandler({FilmNotFoundException.class})
-    public ResponseEntity<ResponseDTO> handle(FilmNotFoundException e) {
+    public ResponseEntity<ResponseDto> handle(FilmNotFoundException e) {
         return handle(e, NOT_FOUND);
     }
 
     @ExceptionHandler({CharacterNotFoundException.class})
-    public ResponseEntity<ResponseDTO> handle(CharacterNotFoundException e) {
+    public ResponseEntity<ResponseDto> handle(CharacterNotFoundException e) {
         return handle(e, NOT_FOUND);
     }
 
     @ExceptionHandler({SpeciesNotFoundException.class})
-    public ResponseEntity<ResponseDTO> handle(SpeciesNotFoundException e) {
+    public ResponseEntity<ResponseDto> handle(SpeciesNotFoundException e) {
         return handle(e, NOT_FOUND);
     }
 
     @ExceptionHandler({FailedToFetchFilmException.class})
-    public ResponseEntity<ResponseDTO> handle(FailedToFetchFilmException e) {
+    public ResponseEntity<ResponseDto> handle(FailedToFetchFilmException e) {
         return handle(e, FAILED_DEPENDENCY);
     }
 
     @ExceptionHandler({FailedToFetchSpeciesException.class})
-    public ResponseEntity<ResponseDTO> handle(FailedToFetchSpeciesException e) {
+    public ResponseEntity<ResponseDto> handle(FailedToFetchSpeciesException e) {
         return handle(e, FAILED_DEPENDENCY);
     }
 
     @ExceptionHandler({FailedToFetchCharacterException.class})
-    public ResponseEntity<ResponseDTO> handle(FailedToFetchCharacterException e) {
+    public ResponseEntity<ResponseDto> handle(FailedToFetchCharacterException e) {
         return handle(e, FAILED_DEPENDENCY);
     }
 
     @ExceptionHandler({MethodArgumentTypeMismatchException.class})
-    public ResponseEntity<ResponseDTO> handle(MethodArgumentTypeMismatchException e) {
+    public ResponseEntity<ResponseDto> handle(MethodArgumentTypeMismatchException e) {
         return handle(e, BAD_REQUEST);
     }
 
     @ExceptionHandler({Exception.class})
-    public ResponseEntity<ResponseDTO> handle(Exception e) {
+    public ResponseEntity<ResponseDto> handle(Exception e) {
         return handle(e, INTERNAL_SERVER_ERROR);
     }
 
-    public ResponseEntity<ResponseDTO> handle(Exception e, HttpStatus status) {
-        ErrorDTO errorDTO = new ErrorDTO();
-        errorDTO.setMessage(translatorService.toLocale(e.getMessage()));
+    public ResponseEntity<ResponseDto> handle(Exception e, HttpStatus status) {
+        ErrorDto errorDto = new ErrorDto();
+        errorDto.setMessage(translatorService.toLocale(e.getMessage()));
 
-        return new ResponseEntity<>(errorDTO, status);
+        return new ResponseEntity<>(errorDto, status);
     }
 }

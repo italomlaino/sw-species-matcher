@@ -2,9 +2,9 @@ package com.italomlaino.swspeciesmatcher.api.provider;
 
 public interface Provider {
 
-    FilmDTO fetchFilm(long filmId);
+    FilmDto fetchFilm(long filmId);
 
-    CharacterDTO fetchCharacter(long characterId);
+    CharacterDto fetchCharacter(long characterId);
 
-    SpeciesDTO fetchSpecies(long speciesId);
+    SpeciesDto fetchSpecies(long speciesId);
 }

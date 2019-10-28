@@ -1,6 +1,6 @@
 package com.italomlaino.swspeciesmatcher.api.controller;
 
-import com.italomlaino.swspeciesmatcher.api.dto.ResponseDTO;
+import com.italomlaino.swspeciesmatcher.api.dto.ResponseDto;
 import com.italomlaino.swspeciesmatcher.api.service.SpeciesMatcherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,7 +20,7 @@ public class SpeciesMatcherController {
     }
 
     @RequestMapping("/api/jdtest")
-    public ResponseEntity<ResponseDTO> matches(
+    public ResponseEntity<ResponseDto> matches(
             @RequestParam("film_id") long filmId,
             @RequestParam("character_id") long characterId) {
         return new ResponseEntity<>(service.matches(filmId, characterId), HttpStatus.OK);

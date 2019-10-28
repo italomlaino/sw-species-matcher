@@ -6,10 +6,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class SWApiCoConfiguration {
+public class SwApiCoConfiguration {
 
     @Bean
     public ErrorDecoder errorDecoder() {
-        return AnnotationErrorDecoder.builderFor(SWApiCoFeignClient.class).build();
+        return AnnotationErrorDecoder.builderFor(SwApiCoFeignClient.class).build();
     }
 }

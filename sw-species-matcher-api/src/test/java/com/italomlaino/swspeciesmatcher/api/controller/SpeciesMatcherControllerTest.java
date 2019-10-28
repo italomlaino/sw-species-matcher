@@ -3,7 +3,7 @@ package com.italomlaino.swspeciesmatcher.api.controller;
 import com.italomlaino.swspeciesmatcher.api.exception.FailedToFetchCharacterException;
 import com.italomlaino.swspeciesmatcher.api.exception.FailedToFetchFilmException;
 import com.italomlaino.swspeciesmatcher.api.provider.Provider;
-import com.italomlaino.swspeciesmatcher.api.service.URLService;
+import com.italomlaino.swspeciesmatcher.api.service.UrlService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +37,7 @@ public class SpeciesMatcherControllerTest {
     @SpyBean
     private Provider provider;
     @SpyBean
-    private URLService urlService;
+    private UrlService urlService;
 
     @Test
     public void matches_happyDay() throws Exception {
@@ -49,7 +49,7 @@ public class SpeciesMatcherControllerTest {
 
     @Test
     public void matches_characterNotFound() throws Exception {
-        doReturn(99999999999L).when(urlService).getIdByURL(contains("people"));
+        doReturn(99999999999L).when(urlService).getIdByUrl(contains("people"));
 
         mvc.perform(
                 getRequest("1", "99999999999"))
