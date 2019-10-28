@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class PeopleDTO {
+public class CharacterDTO {
 
     @JsonProperty("name")
     private String name;

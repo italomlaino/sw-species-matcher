@@ -67,7 +67,7 @@ public class SpeciesMatcherControllerTest {
 
     @Test
     public void matches_failedToFetchCharacter() throws Exception {
-        doThrow(new FailedToFetchCharacterException()).when(provider).fetchPeople(2);
+        doThrow(new FailedToFetchCharacterException()).when(provider).fetchCharacter(2);
 
         mvc.perform(
                 getRequest("1", "2"))

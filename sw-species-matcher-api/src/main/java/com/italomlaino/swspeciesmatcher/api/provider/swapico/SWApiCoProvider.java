@@ -1,7 +1,7 @@
 package com.italomlaino.swspeciesmatcher.api.provider.swapico;
 
 import com.italomlaino.swspeciesmatcher.api.provider.FilmDTO;
-import com.italomlaino.swspeciesmatcher.api.provider.PeopleDTO;
+import com.italomlaino.swspeciesmatcher.api.provider.CharacterDTO;
 import com.italomlaino.swspeciesmatcher.api.provider.SpeciesDTO;
 import com.italomlaino.swspeciesmatcher.api.provider.Provider;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +23,8 @@ public class SWApiCoProvider implements Provider {
     }
 
     @Override
-    public PeopleDTO fetchPeople(long peopleId) {
-        return feignClient.fetchPeople(peopleId);
+    public CharacterDTO fetchCharacter(long characterId) {
+        return feignClient.fetchPeople(characterId);
     }
 
     @Override

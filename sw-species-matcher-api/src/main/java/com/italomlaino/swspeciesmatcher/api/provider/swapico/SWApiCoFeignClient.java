@@ -2,7 +2,7 @@ package com.italomlaino.swspeciesmatcher.api.provider.swapico;
 
 import com.italomlaino.swspeciesmatcher.api.exception.*;
 import com.italomlaino.swspeciesmatcher.api.provider.FilmDTO;
-import com.italomlaino.swspeciesmatcher.api.provider.PeopleDTO;
+import com.italomlaino.swspeciesmatcher.api.provider.CharacterDTO;
 import com.italomlaino.swspeciesmatcher.api.provider.SpeciesDTO;
 import feign.error.ErrorCodes;
 import feign.error.ErrorHandling;
@@ -24,7 +24,7 @@ public interface SWApiCoFeignClient {
             @ErrorCodes(codes = {404}, generate = CharacterNotFoundException.class)
     }, defaultException = FailedToFetchCharacterException.class)
     @RequestMapping(method = RequestMethod.GET, value = "/people/{peopleId}")
-    PeopleDTO fetchPeople(@PathVariable("peopleId") long peopleId);
+    CharacterDTO fetchPeople(@PathVariable("peopleId") long peopleId);
 
     @ErrorHandling(codeSpecific = {
             @ErrorCodes(codes = {404}, generate = SpeciesNotFoundException.class)

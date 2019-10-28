@@ -4,7 +4,7 @@ public interface Provider {
 
     FilmDTO fetchFilm(long filmId);
 
-    PeopleDTO fetchPeople(long peopleId);
+    CharacterDTO fetchCharacter(long characterId);
 
     SpeciesDTO fetchSpecies(long speciesId);
 }

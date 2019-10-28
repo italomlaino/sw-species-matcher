@@ -2,7 +2,7 @@ package com.italomlaino.swspeciesmatcher.api.service;
 
 import com.italomlaino.swspeciesmatcher.api.dto.MatchedSpeciesDTO;
 import com.italomlaino.swspeciesmatcher.api.provider.FilmDTO;
-import com.italomlaino.swspeciesmatcher.api.provider.PeopleDTO;
+import com.italomlaino.swspeciesmatcher.api.provider.CharacterDTO;
 import com.italomlaino.swspeciesmatcher.api.provider.Provider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,14 +29,14 @@ public class SpeciesMatcherService {
             long characterId) {
         Supplier<Stream<String>> characters = () -> getFilm(filmId).getCharacters().parallelStream();
         Supplier<Stream<Long>> charactersIds = () -> characters.get().map(characterURL -> urlService.getIdByURL(characterURL));
-        List<String> selectedSpecies = fetchPeople(characterId).getSpecies();
+        List<String> selectedSpecies = fetchCharacter(characterId).getSpecies();
         return charactersIds
                 .get()
-                .map(this::fetchPeople)
-                .filter(people -> people.getSpecies().containsAll(selectedSpecies))
+                .map(this::fetchCharacter)
+                .filter(character -> character.getSpecies().containsAll(selectedSpecies))
                 .collect(Collectors.collectingAndThen(
                         Collectors.toList(),
-                        list -> new MatchedSpeciesDTO(list.stream().map(PeopleDTO::getName).collect(Collectors.toList())))
+                        list -> new MatchedSpeciesDTO(list.stream().map(CharacterDTO::getName).collect(Collectors.toList())))
                 );
     }
 
@@ -44,7 +44,7 @@ public class SpeciesMatcherService {
         return provider.fetchFilm(filmId);
     }
 
-    private PeopleDTO fetchPeople(long peopleId) {
-        return provider.fetchPeople(peopleId);
+    private CharacterDTO fetchCharacter(long characterId) {
+        return provider.fetchCharacter(characterId);
     }
 }
