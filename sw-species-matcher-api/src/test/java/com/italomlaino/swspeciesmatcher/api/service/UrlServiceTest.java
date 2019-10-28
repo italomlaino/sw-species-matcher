@@ -32,7 +32,7 @@ public class UrlServiceTest {
     }
 
     @Test
-    public void getIdByUrl_failedToGetIdByURL() {
+    public void getIdByUrl_failedToGetIdByUrl() {
         expectedException.expect(FailedToGetIdByUrlException.class);
 
         subject.getIdByUrl("https://swapi.co/people/A");

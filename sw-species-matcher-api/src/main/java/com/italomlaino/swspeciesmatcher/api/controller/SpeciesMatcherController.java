@@ -25,4 +25,11 @@ public class SpeciesMatcherController {
             @RequestParam("character_id") long characterId) {
         return new ResponseEntity<>(service.matches(filmId, characterId), HttpStatus.OK);
     }
+
+    @RequestMapping("/restricted/api/jdtest")
+    public ResponseEntity<ResponseDto> restrictedMatches(
+            @RequestParam("film_id") long filmId,
+            @RequestParam("character_id") long characterId) {
+        return new ResponseEntity<>(service.matches(filmId, characterId), HttpStatus.OK);
+    }
 }

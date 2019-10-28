@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-@FeignClient(name = "SwApiCoFeignClient", url = "${SwApi.base.url}")
+@FeignClient(name = "SwApiCoFeignClient", url = "${sw.api.base.url}")
 public interface SwApiCoFeignClient {
 
     @ErrorHandling(codeSpecific = {

@@ -59,6 +59,11 @@ public class GlobalControllerAdvice {
         return handle(e, BAD_REQUEST);
     }
 
+    @ExceptionHandler({InvalidCredentialsException.class})
+    public ResponseEntity<ResponseDto> handle(InvalidCredentialsException e) {
+        return handle(e, UNAUTHORIZED);
+    }
+
     @ExceptionHandler({Exception.class})
     public ResponseEntity<ResponseDto> handle(Exception e) {
         return handle(e, INTERNAL_SERVER_ERROR);
