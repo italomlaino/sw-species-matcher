@@ -1,0 +1,3 @@
+rootProject.name = 'sw-species-matcher'
+
+include 'sw-species-matcher-api'

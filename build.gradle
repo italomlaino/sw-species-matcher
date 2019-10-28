@@ -1,0 +1,14 @@
+allprojects {
+    apply plugin: 'idea'
+
+    repositories {
+        mavenCentral()
+    }
+}
+
+subprojects {
+    version = '1.0'
+}
+
+group 'com.italomlaino'
+version '1.0-SNAPSHOT'
