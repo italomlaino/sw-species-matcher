@@ -1,6 +1,6 @@
 package com.italomlaino.swspeciesmatcher.api.service;
 
-import com.italomlaino.swspeciesmatcher.api.exception.FailedToGetIdByURL;
+import com.italomlaino.swspeciesmatcher.api.exception.FailedToGetIdByURLException;
 import org.springframework.stereotype.Service;
 
 import java.util.regex.MatchResult;
@@ -15,7 +15,7 @@ public class URLService {
         Pattern pattern = Pattern.compile(characterIdRegex);
         Matcher matches = pattern.matcher(url);
         if (!matches.matches())
-            throw new FailedToGetIdByURL();
+            throw new FailedToGetIdByURLException();
 
         MatchResult matchResult = matches.toMatchResult();
         return Long.parseLong(matchResult.group(1));

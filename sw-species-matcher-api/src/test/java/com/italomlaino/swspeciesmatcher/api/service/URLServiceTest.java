@@ -1,6 +1,6 @@
 package com.italomlaino.swspeciesmatcher.api.service;
 
-import com.italomlaino.swspeciesmatcher.api.exception.FailedToGetIdByURL;
+import com.italomlaino.swspeciesmatcher.api.exception.FailedToGetIdByURLException;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -33,7 +33,7 @@ public class URLServiceTest {
 
     @Test
     public void getIdByURL_failedToGetIdByURL() {
-        expectedException.expect(FailedToGetIdByURL.class);
+        expectedException.expect(FailedToGetIdByURLException.class);
 
         subject.getIdByURL("https://swapi.co/people/A");
     }
