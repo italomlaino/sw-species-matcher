@@ -9,7 +9,7 @@ const MainContainer = () => {
     const [jsonResponse, setJsonResponse] = useState({});
 
     const toggleButtonState = () => {
-        fetch(`${process.env.REACT_APP_HOST_URL}?film_id=${filmId}&character_id=${characterId}`)
+        fetch(`${process.env.REACT_APP_HOST_URL}/api/jdtest?film_id=${filmId}&character_id=${characterId}`)
             .then(response => {
                 response.json().then(data => setJsonResponse(data));
             })
